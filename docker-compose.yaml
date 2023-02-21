@@ -1,7 +1,30 @@
 version: '3.7'
 services:
+  mysql:
+    image: mysql
+    ports:
+      - '3306:3306'
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+  redis:
+    image: bitnami/redis:latest
+    container_name: redis
+    ports:
+      - '6379:6379'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+  etcd:
+    image: bitnami/etcd
+    container_name: etcd
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+    ports:
+      - '2379:2379'
+
   zookeeper:
     image: wurstmeister/zookeeper
+    container_name: zookeeper
     # volumes:
     #   - ./data:/data
     ports:
@@ -9,9 +32,10 @@ services:
     environment:
     # 匿名登录--必须开启
     - ALLOW_ANONYMOUS_LOGIN=yes
-       
+
   kafka:
     image: wurstmeister/kafka
+    container_name: kafka
     ports:
       - 9092:9092
     environment:
